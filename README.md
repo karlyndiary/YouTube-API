@@ -250,6 +250,7 @@ ax[1].set(xlabel='Like count', ylabel='View Count')
 
 plt.show()
 ```
+![download (7)](https://user-images.githubusercontent.com/116041695/215266711-19d74354-ff50-4d0a-bf35-75e52904dc45.png)
 
 ### 4.5 Video Duration
 ```
@@ -293,6 +294,3 @@ ax.get_legend().remove()
 plt.show()
 ```
 ![download (5)](https://user-images.githubusercontent.com/116041695/215266416-5230bbce-c2ef-4d4d-954d-b73cfd563e6c.png)
-
-## 5. Act
-- According to the BMI distribution, 5 users are overweight, 2 are of Normal Weight, and 1 is Obese, Bellabeat can implement an alarm to remind the user every day when it is time for a walk or workout. An alert could also be sent out if the user has been sedentary for a while.

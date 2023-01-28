@@ -1,3 +1,4 @@
+
 # YouTube API 
 
 ## Summary
@@ -268,6 +269,20 @@ def plot_cloud(wordcloud):
 wordcloud = WordCloud(width = 2000, height = 1000, random_state=1, background_color='black', 
                       colormap='viridis', collocations=False).generate(all_words_str)
 plot_cloud(wordcloud)
+```
+![image]()
+
+### 4.7 Upload Schedule
+```
+plt.figure(figsize=(50, 50))
+day_df = pd.DataFrame(video_df['publishedDayName'].value_counts())
+weekdays = [ 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+day_df = day_df.reindex(weekdays)
+ax = day_df.reset_index().plot.bar(x='index', y='publishedDayName', rot=45)
+plt.xlabel('Days of the week')
+ax.get_legend().remove()
+
+plt.show()
 ```
 ![image]()
 

@@ -19,6 +19,9 @@ Since all data requested from Youtube API is public data (which everyone on the 
 ### 3.1 Installing the necessary packages needed for cleaning and analysis.
 
 ```bash
+The Google APIs Client Library for Python:
+pip install --upgrade google-api-python-client
+
 #Google API
 from googleapiclient.discovery import build
 

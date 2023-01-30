@@ -21,9 +21,9 @@ The data is collected using the youtube api key with the help of the documentati
 Since all data requested from Youtube API is public data (which everyone on the Internet can see on Youtube), there is no particular privacy issues as far as I am concerned. In addition, the data is obtained only for research purposes in this case and not for any commercial interests.
 
 
-## 3. Process
+## 2. Process
 
-### 3.1 Installing the necessary packages needed for cleaning and analysis.
+### 2.1 Installing the necessary packages needed for cleaning and analysis.
 #### Run Locally: The Google APIs Client Library for Python:
 ```
 pip install --upgrade google-api-python-client
@@ -52,7 +52,7 @@ nltk.download('stopwords')
 from wordcloud import WordCloud
 ```
 
-### 3.2 Data creation with YouTube API
+### 2.2 Data creation with YouTube API
 
 ```bash
 api_key = 'GOOGLE API KEY HERE'
@@ -178,11 +178,11 @@ def get_video_details(youtube, video_ids):
 video_df = get_video_details(youtube, video_ids)
 video_df
 ```
-### 3.3 Write video data to CSV file for future reference
+### 2.3 Write video data to CSV file for future reference
 ```
 video_df.to_csv('video_data.csv')
 ```
- ## 4. Data cleaning
+ ## 3. Data cleaning
 **Checking for any null values**
 ```bash
 video_df.isnull().any()
@@ -213,8 +213,8 @@ video_df[['durationSecs','duration']]
 video_df['tag_count'] = video_df['tags'].apply(lambda x: 0 if x is None else len(x))
 video_df
 ```
-## 5. Data Visualization
-### 5.1 Best Performing video
+## 4. Data Visualization
+### 4.1 Best Performing video
 ```
 ax = sns.barplot(x = 'title', y = 'viewCount', data = video_df.sort_values('viewCount', ascending=False)[0:10])
 plot = ax.set_xticklabels(ax.get_xticklabels(), rotation = 90)
@@ -227,7 +227,7 @@ plt.title('Best Performing Videos')
 
 From the bar chart, we can see that this channel has a series playlist called "But Better", and four videos out of the series are in the top 10 best performing videos along with other best performing videos. 
 
-### 5.2 Worst Performing Video
+### 4.2 Worst Performing Video
 ```
 ax = sns.barplot(x = 'title', y = 'viewCount', data = video_df.sort_values('viewCount', ascending=True)[0:10])
 plot = ax.set_xticklabels(ax.get_xticklabels(), rotation = 90)
@@ -249,7 +249,7 @@ plt.title('View Distribution')
 ```
 ![download (2)](https://user-images.githubusercontent.com/116041695/215266362-5eb9e8a1-6fd9-46ea-9a57-007b8be8682f.png)
 
-### 5.4 Comments, Likes vs Views
+### 4.4 Comments, Likes vs Views
 ```
 fig, ax = plt.subplots(1,2)
 sns.scatterplot(data = video_df, x = 'commentCount', y = 'viewCount', ax = ax[0], color = 'violet')
@@ -265,7 +265,7 @@ plt.show()
 
 From the subplot, we notice both the graphs are similar, meaning that higher the view count, higher the likes and comments.
 
-### 5.5 Video Duration
+### 4.5 Video Duration
 ```
 p = sns.histplot(data = video_df, x = 'durationSecs', bins = 30)
 plt.title('Video duration')
@@ -277,7 +277,7 @@ plt.show()
 
 We observe that the duration is mostly in the middle ranging between 350 to 700 seconds which is quite good.
 
-### 5.6 WordCloud from video titles
+### 4.6 WordCloud from video titles
 ```
 stop_words = set(stopwords.words('english'))
 video_df['title_no_stopwords'] = video_df['title'].apply(lambda x: [item for item in str(x).split() if item not in stop_words])
@@ -298,7 +298,7 @@ plot_cloud(wordcloud)
 
 From the wordcloud, we can see some common words like home, homemade, faster, easist, cheaper, guide - this could be that the channel revolves more around the easy but homemade, easy recipes.
 
-### 5.7 Upload Schedule
+### 4.7 Upload Schedule
 ```
 plt.figure(figsize=(50, 50))
 day_df = pd.DataFrame(video_df['publishedDayName'].value_counts())

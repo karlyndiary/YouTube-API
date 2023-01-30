@@ -60,9 +60,9 @@ api_version = "v3"
 # Get credentials and create an API client
 youtube = build(api_service_name, api_version, developerKey=api_key)
 ```
-
+## Get Channel Statistics
+This function will help use get information about the channel's statistics like the subscriber count, total no of videos published.
 ```
-#basic channel stats
 def get_channel_stats(youtube, channel_ids):
     
     all_data = []
@@ -86,7 +86,7 @@ def get_channel_stats(youtube, channel_ids):
         
     return(pd.DataFrame(all_data))
 ```
-Calling the function to get the channel basic information
+## Calling the function to get the channel basic information
 ```
 channel_stats = get_channel_stats(youtube, channel_ids)
 channel_stats

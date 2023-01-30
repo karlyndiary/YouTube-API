@@ -63,7 +63,7 @@ api_version = "v3"
 #Get credentials and create an API client
 youtube = build(api_service_name, api_version, developerKey=api_key)
 ```
-## Get Channel Statistics
+### Get Channel Statistics
 This function will help use get information about the channel's statistics like the title, subscriber count, total no of videos published.
 ```
 def get_channel_stats(youtube, channel_ids):
@@ -206,8 +206,8 @@ video_df[['durationSecs','duration']]
 video_df['tag_count'] = video_df['tags'].apply(lambda x: 0 if x is None else len(x))
 video_df
 ```
-## 4. Data Visualization
-### 4.1 Best Performing video
+## 5. Data Visualization
+### 5.1 Best Performing video
 ```
 ax = sns.barplot(x = 'title', y = 'viewCount', data = video_df.sort_values('viewCount', ascending=False)[0:10])
 plot = ax.set_xticklabels(ax.get_xticklabels(), rotation = 90)
@@ -219,7 +219,8 @@ plt.title('Best Performing Videos')
 ![download](https://user-images.githubusercontent.com/116041695/215266326-5807bcfd-c801-4546-9c63-168363e1353f.png)
 
 From the bar chart, we can see that this channel has a series playlist called "But Better", and four videos out of the series are in the top 10 best performing videos along with other best performing videos. 
-### 4.2 Worst Performing Video
+
+### 5.2 Worst Performing Video
 ```
 ax = sns.barplot(x = 'title', y = 'viewCount', data = video_df.sort_values('viewCount', ascending=True)[0:10])
 plot = ax.set_xticklabels(ax.get_xticklabels(), rotation = 90)
@@ -232,7 +233,7 @@ plt.title('Worst Performing Videos')
 
 We can see the top 10 worst performing videos. 
 
-### 4.3 Video Distribution per video
+### 5.3 Video Distribution per video
 ```
 sns.violinplot(x ='channelTitle', y ='viewCount', data = video_df)
 plt.ylabel('View Count')
@@ -241,7 +242,7 @@ plt.title('View Distribution')
 ```
 ![download (2)](https://user-images.githubusercontent.com/116041695/215266362-5eb9e8a1-6fd9-46ea-9a57-007b8be8682f.png)
 
-### 4.4 Comments, Likes vs Views
+### 5.4 Comments, Likes vs Views
 ```
 fig, ax = plt.subplots(1,2)
 sns.scatterplot(data = video_df, x = 'commentCount', y = 'viewCount', ax = ax[0], color = 'violet')
@@ -257,7 +258,7 @@ plt.show()
 
 From the subplot, we notice both the graphs are similar, meaning that higher the view count, higher the likes and comments.
 
-### 4.5 Video Duration
+### 5.5 Video Duration
 ```
 p = sns.histplot(data = video_df, x = 'durationSecs', bins = 30)
 plt.title('Video duration')
@@ -269,7 +270,7 @@ plt.show()
 
 We observe that the duration is mostly in the middle ranging between 350 to 700 seconds which is quite good.
 
-### 4.6 WordCloud from video titles
+### 5.6 WordCloud from video titles
 ```
 stop_words = set(stopwords.words('english'))
 video_df['title_no_stopwords'] = video_df['title'].apply(lambda x: [item for item in str(x).split() if item not in stop_words])
@@ -290,7 +291,7 @@ plot_cloud(wordcloud)
 
 From the wordcloud, we can see some common words like home, homemade, faster, easist, cheaper, guide - this could be that the channel revolves more around the easy but homemade, easy recipes.
 
-### 4.7 Upload Schedule
+### 5.7 Upload Schedule
 ```
 plt.figure(figsize=(50, 50))
 day_df = pd.DataFrame(video_df['publishedDayName'].value_counts())

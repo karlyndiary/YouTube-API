@@ -1,13 +1,20 @@
 
 # YouTube API 
 
-## 1. Summary
+## Summary
 
 Founded in 2005, Youtube has grown to become the second largest search engine in the world (behind Google) that processes more than 3 billion searches per month. It is, however, generally a myth how the Youtube algorithm works, what makes a video get views and be recommended over another. In fact, YouTube has one of the largest scale and most sophisticated industrial recommendation systems in existence. For new content creators, it is a challenge to understand why a video gets video and others do not. There are many "myths" around the success of a Youtube video, for example if the video has more likes or comments, or if the video is of a certain duration. It is also worth experimenting and looking for "trends" in the topics that Youtube channels are covering in a certain niche.
 
 Having recently stepping into the content creation world with a new Youtube channel on data analytics and data science, I decided to gain some insights on this topic which might be useful for other new content creators. The scope of this small project is limited to data science channels and I will not consider other niches (that might have a different characteristics and audience base). Therefore, in this project will explore the statistics of around 10 most successful data science Youtube channel.
 
-## 2. Prepare
+The case study follows the six step data analysis process:
+
+* [1. Prepare](#1-prepare)
+* [2. Process](#2-process)
+* [3. Data Cleaning](#3-data-cleaning)
+* [4. Data Visualization](#4-data-visualization)
+
+## 1. Prepare
 
 The data is collected using the youtube api key with the help of the documentation provided with it. According to [YouTube API Guide](https://developers.google.com/youtube/v3/getting-started), the usage of Youtube API is free of charge given that your application send requests within a quota limit. "The YouTube Data API uses a quota to ensure that developers use the service as intended and do not create applications that unfairly reduce service quality or limit access for others. " The default quota allocation for each application is 10,000 units per day, and you could request additional quota by completing a form to YouTube API Services if you reach the quota limit.
 
@@ -175,7 +182,7 @@ video_df
 ```
 video_df.to_csv('video_data.csv')
 ```
- ## 4. Data Pre-processing
+ ## 4. Data cleaning
 **Checking for any null values**
 ```bash
 video_df.isnull().any()

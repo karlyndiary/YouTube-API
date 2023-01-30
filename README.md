@@ -182,7 +182,7 @@ video_df
 ```
 video_df.to_csv('video_data.csv')
 ```
- ## 3. Data cleaning
+ ## 3. Data Cleaning
 **Checking for any null values**
 ```bash
 video_df.isnull().any()

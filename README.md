@@ -17,23 +17,29 @@ Since all data requested from Youtube API is public data (which everyone on the 
 ## 3. Process
 
 ### 3.1 Installing the necessary packages needed for cleaning and analysis.
-
-```bash
-The Google APIs Client Library for Python:
+#### Run Locally: The Google APIs Client Library for Python:
+```
 pip install --upgrade google-api-python-client
-
+```
+```
 #Google API
 from googleapiclient.discovery import build
+```
+```
 
 import pandas as pd
 from IPython.display import JSON
 from dateutil import parser
 import isodate #convert youtube duration to seconds
+```
+```
 
 #Data viz packages
 import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
+```
+```
 
 #NLP
 import nltk
@@ -57,11 +63,11 @@ channel_ids = ['UChBEbMKI1eCcejTtmI32UEw']
 api_service_name = "youtube"
 api_version = "v3"
 
-# Get credentials and create an API client
+#Get credentials and create an API client
 youtube = build(api_service_name, api_version, developerKey=api_key)
 ```
 ## Get Channel Statistics
-This function will help use get information about the channel's statistics like the subscriber count, total no of videos published.
+This function will help use get information about the channel's statistics like the title, subscriber count, total no of videos published.
 ```
 def get_channel_stats(youtube, channel_ids):
     
@@ -86,11 +92,12 @@ def get_channel_stats(youtube, channel_ids):
         
     return(pd.DataFrame(all_data))
 ```
-## Calling the function to get the channel basic information
+### Calling the function to get the channel basic information
 ```
 channel_stats = get_channel_stats(youtube, channel_ids)
 channel_stats
 ```
+### Defining a function to return all the video ids in the playlist.
 ```
 playlist_id = 'UUhBEbMKI1eCcejTtmI32UEw'
 
@@ -124,12 +131,13 @@ def get_video_ids(youtube, playlist_id):
         
     return video_ids
 ```
-
+Calling the function to return the list of video ids from the playlist.
 ```
 video_ids = get_video_ids(youtube, playlist_id)
 len(video_ids)	
 ```
-Defining a function to get the channels details
+### Defining a function to get the channels details
+Details such as channel title, title of the video, description, like count, comment count, duration and more.
 ```
 def get_video_details(youtube, video_ids):
 
@@ -161,12 +169,12 @@ def get_video_details(youtube, video_ids):
     
     return pd.DataFrame(all_video_info)
 ```
+### Returns the video details
 ```
-#get video details
 video_df = get_video_details(youtube, video_ids)
 video_df
 ```
-### 3.3 Write video data to CSV file for future references
+### 3.3 Write video data to CSV file for future reference
 ```
 video_df.to_csv('video_data.csv')
 ```
@@ -180,18 +188,15 @@ video_df.isnull().any()
 video_df.dtypes
 ```
 **Converting to numeric**
-
 ```
 numeric_cols = ['viewCount', 'likeCount', 'favouriteCount', 'commentCount']
 video_df[numeric_cols] = video_df[numeric_cols].apply(pd.to_numeric, errors = 'coerce', axis = 1)
   ```
-
 **Publish day of week**
 ```
 video_df['publishedAt'] = video_df['publishedAt'].apply(lambda x: parser.parse(x))
 video_df['publishedDayName'] = video_df['publishedAt'].apply(lambda x: x.strftime("%A"))
 ```
-
 **Converting duration to seconds**
 ```
 video_df['durationSecs'] = video_df['duration'].apply(lambda x: isodate.parse_duration(x))
@@ -199,7 +204,6 @@ video_df['durationSecs'] = video_df['durationSecs'].astype('timedelta64[s]')
 
 video_df[['durationSecs','duration']]
 ```
-
 **Add tag count**
 ```
 video_df['tag_count'] = video_df['tags'].apply(lambda x: 0 if x is None else len(x))
@@ -217,8 +221,8 @@ plt.title('Best Performing Videos')
 ```
 ![download](https://user-images.githubusercontent.com/116041695/215266326-5807bcfd-c801-4546-9c63-168363e1353f.png)
 
+From the bar chart, we can see that this channel has a series playlist called "But Better", and four videos out of the series are in the top 10 best performing videos along with other best performing videos. 
 ### 4.2 Worst Performing Video
-
 ```
 ax = sns.barplot(x = 'title', y = 'viewCount', data = video_df.sort_values('viewCount', ascending=True)[0:10])
 plot = ax.set_xticklabels(ax.get_xticklabels(), rotation = 90)
@@ -228,6 +232,8 @@ plt.ylabel('View Count')
 plt.title('Worst Performing Videos')
 ```
 ![download (1)](https://user-images.githubusercontent.com/116041695/215266342-bc157bec-2c91-41ed-ab03-b4cc6dd1dd38.png)
+
+We can see the top 10 worst performing videos. 
 
 ### 4.3 Video Distribution per video
 ```
@@ -252,6 +258,8 @@ plt.show()
 ```
 ![download (7)](https://user-images.githubusercontent.com/116041695/215266711-19d74354-ff50-4d0a-bf35-75e52904dc45.png)
 
+From the subplot, we notice both the graphs are similar, meaning that higher the view count, higher the likes and comments.
+
 ### 4.5 Video Duration
 ```
 p = sns.histplot(data = video_df, x = 'durationSecs', bins = 30)
@@ -262,7 +270,9 @@ plt.show()
 ```
 ![download (3)](https://user-images.githubusercontent.com/116041695/215266380-bcec29bb-e6f3-4f56-8554-60dc57b95cb4.png)
 
-### 4.6 WordCloud
+We observe that the duration is mostly in the middle ranging between 350 to 700 seconds which is quite good.
+
+### 4.6 WordCloud from video titles
 ```
 stop_words = set(stopwords.words('english'))
 video_df['title_no_stopwords'] = video_df['title'].apply(lambda x: [item for item in str(x).split() if item not in stop_words])
@@ -281,6 +291,8 @@ plot_cloud(wordcloud)
 ```
 ![download (6)](https://user-images.githubusercontent.com/116041695/215266481-6492810d-d06f-4792-9d14-81906bb1893c.png)
 
+From the wordcloud, we can see some common words like home, homemade, faster, easist, cheaper, guide - this could be that the channel revolves more around the easy but homemade, easy recipes.
+
 ### 4.7 Upload Schedule
 ```
 plt.figure(figsize=(50, 50))
@@ -294,3 +306,5 @@ ax.get_legend().remove()
 plt.show()
 ```
 ![download (5)](https://user-images.githubusercontent.com/116041695/215266416-5230bbce-c2ef-4d4d-954d-b73cfd563e6c.png)
+
+The upload schedule is fairly spaced out and regular. Wednesday and Sunday being the regular schedule and maybe friday could have some extra bonus videos.

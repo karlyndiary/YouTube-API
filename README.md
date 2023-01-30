@@ -7,7 +7,7 @@ Founded in 2005, Youtube has grown to become the second largest search engine in
 
 Having recently stepping into the content creation world with a new Youtube channel on data analytics and data science, I decided to gain some insights on this topic which might be useful for other new content creators. The scope of this small project is limited to data science channels and I will not consider other niches (that might have a different characteristics and audience base). Therefore, in this project will explore the statistics of around 10 most successful data science Youtube channel.
 
-The case study follows the six step data analysis process:
+Data analysis for the case study follows the following steps:
 
 * [1. Prepare](#1-prepare)
 * [2. Process](#2-process)

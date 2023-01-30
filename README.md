@@ -26,21 +26,18 @@ pip install --upgrade google-api-python-client
 from googleapiclient.discovery import build
 ```
 ```
-
 import pandas as pd
 from IPython.display import JSON
 from dateutil import parser
 import isodate #convert youtube duration to seconds
 ```
 ```
-
 #Data viz packages
 import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 ```
 ```
-
 #NLP
 import nltk
 from nltk.corpus import stopwords
@@ -131,7 +128,7 @@ def get_video_ids(youtube, playlist_id):
         
     return video_ids
 ```
-Calling the function to return the list of video ids from the playlist.
+### Calling the function to return the list of video ids from the playlist.
 ```
 video_ids = get_video_ids(youtube, playlist_id)
 len(video_ids)	

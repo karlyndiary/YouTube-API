@@ -50,7 +50,7 @@ from wordcloud import WordCloud
 ### 2.2 Data creation with YouTube API
 
 ```bash
-api_key = 'GOOGLE API KEY HERE'
+api_key = 'YOUTUBE API KEY HERE'
 ```
 
 ```bash
